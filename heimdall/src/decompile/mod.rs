@@ -7,7 +7,6 @@ use clap::{AppSettings, Parser};
        global_setting = AppSettings::DeriveDisplayOrder, 
        override_usage = "heimdall decompile <TARGET> [OPTIONS]")]
 pub struct DecompilerArgs {
-    
     /// The target to decompile, either a file, contract address, or ENS name.
     #[clap(required=true)]
     target: String,
