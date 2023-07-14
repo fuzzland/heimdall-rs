@@ -23,11 +23,11 @@ use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct ABIToken {
-    name: String,
+    pub name: String,
     #[serde(rename = "internalType")]
-    internal_type: String,
+    pub internal_type: String,
     #[serde(rename = "type")]
-    type_: String,
+    pub type_: String,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
@@ -45,17 +45,17 @@ pub struct FunctionABI {
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct ErrorABI {
     #[serde(rename = "type")]
-    type_: String,
-    name: String,
-    inputs: Vec<ABIToken>,
+    pub type_: String,
+    pub name: String,
+    pub inputs: Vec<ABIToken>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct EventABI {
     #[serde(rename = "type")]
-    type_: String,
-    name: String,
-    inputs: Vec<ABIToken>,
+    pub type_: String,
+    pub name: String,
+    pub inputs: Vec<ABIToken>,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
