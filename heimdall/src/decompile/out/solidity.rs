@@ -117,7 +117,7 @@ pub fn output(
                     None => {}
                 }
 
-                (resolved_function.name.clone(), inputs, outputs)
+                (format!("Unresolved_{}", function.selector), inputs, outputs)
             }
             None => {
                 // if the function is unresolved, use the decompiler's potential types
