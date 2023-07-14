@@ -6,6 +6,7 @@ license = "MIT"
 name = "heimdall"
 readme = "README.md"
 version = "0.4.8"
+authors = ["Heimdall"]
 
 [dependencies]
 backtrace = "0.3"
@@ -28,6 +29,4 @@ strsim = "0.10.0"
 tokio = {version = "1", features = ["full"]}
 tui = "0.19"
 
-[[bin]]
-name = "heimdall"
-path = "src/heimdall.rs"
+[features]

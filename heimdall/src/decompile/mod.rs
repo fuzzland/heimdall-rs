@@ -6,6 +6,7 @@ pub mod resolve;
 pub mod util;
 
 use crate::decompile::{resolve::*, util::*};
+use out::solidity::ABIStructure;
 
 use heimdall_common::{
     ether::{
@@ -72,7 +73,17 @@ pub struct DecompilerArgs {
     pub include_yul: bool,
 }
 
-pub fn decompile(args: DecompilerArgs) {
+pub fn decompile_with_bytecode(contract_bytecode: String, output_dir: String) -> Vec<ABIStructure>{
+    let args = DecompilerArgs {
+        target: contract_bytecode,
+        verbose: clap_verbosity_flag::Verbosity::new(-1, 1),
+        output: output_dir,
+        rpc_url: String::from(""),
+        default: true,
+        skip_resolving: false,
+        include_solidity: true,
+        include_yul: false,
+    };
     use std::time::Instant;
     let now = Instant::now();
 
@@ -592,32 +603,16 @@ pub fn decompile(args: DecompilerArgs) {
     logger.info("symbolic execution completed.");
     logger.info("building decompilation output.");
 
-    // create the decompiled source output
-    if args.include_yul {
-        out::yul::output(
-            &args,
-            output_dir,
-            analyzed_functions,
-            all_resolved_events,
-            &logger,
-            &mut trace,
-            decompile_call,
-        );
-    } else {
-        out::solidity::output(
-            &args,
-            output_dir,
-            analyzed_functions,
-            all_resolved_errors,
-            all_resolved_events,
-            &logger,
-            &mut trace,
-            decompile_call,
-        );
-    }
-
-    trace.display();
-    logger.debug(&format!("decompilation completed in {:?}.", now.elapsed()));
+    return out::solidity::output(
+        &args,
+        output_dir,
+        analyzed_functions,
+        all_resolved_errors,
+        all_resolved_events,
+        &logger,
+        &mut trace,
+        decompile_call,
+    );
 }
 
 /// Builder pattern for using decompile method as a library.
@@ -730,7 +725,7 @@ impl DecompileBuilder {
 
     /// Starts the decompilation.
     #[allow(dead_code)]
-    pub fn decompile(self) {
-        decompile(self.args)
+    pub fn decompile(self)  -> Vec<ABIStructure>{
+        decompile_with_bytecode(self.args.target, self.args.output)
     }
 }
