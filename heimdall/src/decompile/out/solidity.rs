@@ -33,13 +33,13 @@ pub struct ABIToken {
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
 pub struct FunctionABI {
     #[serde(rename = "type")]
-    type_: String,
-    name: String,
-    inputs: Vec<ABIToken>,
-    outputs: Vec<ABIToken>,
+    pub type_: String,
+    pub name: String,
+    pub inputs: Vec<ABIToken>,
+    pub outputs: Vec<ABIToken>,
     #[serde(rename = "stateMutability")]
-    state_mutability: String,
-    constant: bool,
+    pub state_mutability: String,
+    pub constant: bool,
 }
 
 #[derive(Serialize, Deserialize, PartialEq, Debug)]
